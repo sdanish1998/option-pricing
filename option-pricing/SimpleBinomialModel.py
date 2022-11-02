@@ -49,8 +49,8 @@ class SimpleBinomialModel:
         """
         S, X, delta, eta = [], [], [], []
         ST, XT = [], []
-        for i in range(N+1):
-            Si = S0 * (self.u**(self.N-i)) * (self.d**i)
+        for i in range(self.N+1):
+            Si = self.S0 * (self.u**(self.N-i)) * (self.d**i)
             ST.append(Si)
             XT.append(max(Si-self.K, 0))
         S.append(ST)
@@ -62,9 +62,9 @@ class SimpleBinomialModel:
         
             for i in range(t+1):
                 St.append(ST[i]/self.u)
-                Xt.append(option_price(XT[i], XT[i+1]))
-                delta_t.append(stock_position(XT[i], XT[i+1], ST[i]/self.u))
-                eta_t.append(bond_position(XT[i], XT[i+1], ST[i]/self.u))
+                Xt.append(self.option_price(XT[i], XT[i+1]))
+                delta_t.append(self.stock_position(XT[i], XT[i+1], ST[i]/self.u))
+                eta_t.append(self.bond_position(XT[i], XT[i+1], ST[i]/self.u))
         
             S.insert(0, St)
             X.insert(0, Xt)
